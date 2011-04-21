@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>Table layout manager</title>
+</head>
+<body>
+<h1>Table layout manager</h1>
+TableLayout is a Java layout manager that tries to be both powerful
+and easy to use, unlike the standard layout managers supplied with the JDK
+AWT, which seem to be neither!
+It is supplied as a single pure Java <a href=TableLayout.java>source file</a>,
+and has now been updated so no deprecated methods are used under JDK1.1.
+<P>
+The basic metaphor adopted is that of a table, laid out as rows and columns,
+similar to tables in HTML. Unlike the AWT GridLayout, each row and column
+is sized separately, and features such as row and column spanning are
+supported.
+
+<h3>Basic use</h3>
+The only mandatory parameter that needs to be supplied when creating a
+table layout is the number of columns. Adding successive components to a
+container will fill the first row from left to right until the last
+column is reached, then proceed with the next row down and so on.
+<P>
+For example, the following code will lay out a 2x2 table:
+<PRE>
+	setLayout(new TableLayout(2));
+	add(new Label("Top left"));
+	add(new Label("Top right"));
+	add(new Label("Bottom left"));
+	add(new Label("Bottom right"));
+</PRE>
+
+<h3>Cell alignment</h3>
+Within each cell of the table, components can keep their preferred size
+and be aligned to any corner or side of their cell or be centred, or they
+can be made to expand and contract, filling the cell horiztontally or
+vertically (or both). A default alignment for the whole table can be
+specified in the TableLayout constructor, and individual components
+can be overridden when their added to the container. For example,
+<PRE>
+	setLayout(new TableLayout(3, "W")); // left aligned, by default
+	add(new Label("Left"));
+	add("FH", new Label("Filled horizontally"));
+	add("SE", new Label("Bottom right"));
+</PRE>
+
+<h3>Spanning and positioning</h3>
+You can control which cell a component goes in by skipping cells, forcing
+the component into a given column (which will skip cells or go to the
+next row, as required), by specifying SKIP=<I>n</I> or COL=<I>n</I> tags.
+You can also span more than one row or column with the RS=<I>n</I> and CS=<I>n</I> tags:
+<PRE>
+	setLayout(new TableLayout(2));
+	add("CS=2", new Label("Long label across the top"));
+	// bottom left is skipped
+	add("SKIP=1", new Label("Bottom right"));
+</PRE>
+
+<h3>Cell sizing and weighting</h3>
+TableLayout is well behaved with respect to a components minimum and preferred sizes.
+The preferred size of a table is big enough to accommodate all its contents at their
+own preferred size. If the table is resized then rows and columns expand to fill the
+table. Rows always keep their relative proportions, and columns do so too by default.
+However, it is also possible to specify a weighting factor for each column using the
+WT=<I>n</I> flag, in which case any extra space is distributed according to the column's weight.
+The weights of all the columns are added up and then divided by the total to give relative
+weights. By default, the weight of each column is its preferred size, so they expand
+proportionately. Setting the weight of a column to 0 means it doesn't expand and always
+keeps its preferred size. Note that it is possible to change the column weightings on
+different rows, in which case the columns may stop lining up.
+<P>
+<HR>
+<h2>TableLayout Reference</h2>
+
+<h3>Constructors</h3>
+<PRE>TableLayout(int cols, String alignment, int hgap, int vgap);
+TableLayout(int cols, String alignment);	// hgap=0, vgap=0
+TableLayout(int cols);			// alignment="C"</PRE>
+<TABLE>
+<TR><TD>cols</TH><TD>Number of columns, used when adding components to tell when to go to the next row</TD></TR>
+<TR><TD>alignment</TH><TD>Default alignment for cells if not specified at the time of adding the component</TD></TR>
+<TR><TD>hgap</TH><TD>Horizontal gap between cells and at edge (in pixels)</TD></TR>
+<TR><TD>vgap</TH><TD>Vertical gap between cells and at edge (in pixels)</TD></TR>
+</TABLE>
+
+<h3>Alignment flags</h3>
+<TABLE>
+<TR><TD>N,NE,E,SE,<BR>S,SW,W,NW</TD> <TD valign=top>align to top, top right, etc. of cell</TD></TR>
+<TR><TD>FH</TD> <TD>fill horizontally (may be combined with N, C, S or FV to specify vertical behaviour)</TD></TR>
+<TR><TD>FV</TD> <TD>fill vertically (may be combined with E, C, W or FH to specify horizontal behaviour)</TD></TR>
+<TR><TD>F</TD> <TD>fill entire cell</TD></TR>
+<TR><TD>C</TD> <TD>centre component within cell</TD></TR>
+<TR><TD>RS=<I>n</I></TD> <TD>span a given number of rows</TD></TR>
+<TR><TD>CS=<I>n</I></TD> <TD>span a given number of columns</TD></TR>
+<TR><TD>COL=<I>n</I></TD> <TD>force to a given column (where 0 is the first column, ie. start a new row early)</TD></TR>
+<TR><TD>SKIP=<I>n</I></TD> <TD>skip a given number of columns</TD></TR>
+<TR><TD valign=top>WT=<I>n</I></TD> <TD>specify a horizontal weighting factor, used to decide how much to expand the width of each
+column when there is extra space. Applies to this and subsequent rows. WT=-1 means use the preferred
+size of each column as the weighting factor; if all columns have weight -1 each column
+grows proportionately (the default). A weight of 0 means don't expand the width above its
+preferred size.</TD></TR>
+</TABLE>
+<P>
+Most flags can be combined together, eg. "RS=2,FH". If more than one
+alignment flag is specified they must be separated with commas.
+Case is significant, and spaces are not allowed.
+<P>
+<HR>
+<P>
+<A href="http://www.parallax.co.uk/~rolf/">Rolf Howarth</A>
+<BR>
+<font size=-1><I>Last updated: 8 April 1998</I></font>
+</body>
+</html>

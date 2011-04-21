@@ -1,0 +1,10 @@
+- FIX: Beim Schreiben einer Nachricht ereignet sich eine Rebellion --> Deadlock
+- Automatische Kaufev/Verkaufen von Rohstoffen und Nahrung bis zu einem bestimmten Level wie in Pharao
+- Lagerhalle zur Lagerung von Rohstoffen und Nahrung
+- Schiffe schenken
+- Ermöglichen Kartendaten zu tauschen
+- Katalogisierung der erfoschten Sterne mit Sortiermöglichkeit nach gewünschten Parametern
+Bug:
+- DB-Checksumme Onlineüberprüfung überarbeiten, bzw. testen.
+- (nicht bestätigt) Bei Abflug einer Flotte wird zu jedem Schiff der Flotte eine Aktualisierunginformation ins
+Netz abgeschickt

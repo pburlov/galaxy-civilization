@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+
+
+<project basedir="." default="start">
+	
+	
+	<property name="JVM" value="java"/>
+	<property name="SOURCE_DIR" value="src"/>
+	<property name="LIB_DIR" value="lib"/>
+	<property name="LIBEXT_DIR" value="libext"/>
+	<property name="RESSOURCE_DIR" value="res"/>
+	<property name="BUILD_DIR" value="build"/>
+	
+	<path id="cp.build">
+		<pathelement location="${basedir}"/>
+		<pathelement path="./../Common/classes"/>
+		<fileset dir="${LIB_DIR}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	<target name ="deploy">
+	</target>
+
+	<target name="clear">
+		<delete dir="${BUILD_DIR}"></delete>
+		<delete>
+			<fileset dir=".">
+			<filename name="gc.jar"/>
+			<filename name="gc.sh"/>
+			</fileset>
+		</delete>
+		<mkdir dir="${BUILD_DIR}"/>
+	</target>
+	
+	<target name="compile" depends="clear">
+		<javac srcdir="${SOURCE_DIR}" destdir="${BUILD_DIR}" 
+			target="1.5"
+			debug="true" debuglevel="lines,source"
+			encoding="ISO-8859-1">
+			<classpath refid="cp.build"></classpath>
+		</javac>
+	</target>
+	
+	<target name="genjar" depends="compile">
+		<unjar dest="${BUILD_DIR}">
+			<fileset dir="${LIB_DIR}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</unjar>
+		<delete file="gc.jar"></delete>
+		<jar destfile="gc.jar" whenempty="create" compress="false" basedir="${BUILD_DIR}">
+			<fileset dir="${basedir}">
+				<include name="res/**/*"/>
+			</fileset>
+			<fileset dir="./../Common/classes">
+				<include name="**/*"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="obfuscate">
+		<taskdef resource="proguard/ant/task.properties" classpath="${LIBEXT_DIR}/proguard.jar"/>
+		<proguard configuration="proguard_config.pro">
+		</proguard>
+		<copy file="gc_proguard.jar" tofile="gc.jar" overwrite="true"/>
+		<delete file="gc_proguard.jar"/>
+	</target>
+	
+	<target name="genarchiv" 
+		depends="genjar, genarchiv-unix, genarchiv-windows">
+		<copyfile dest="../galaxy-civilization.de/downloads/galaxy-civilization.tar.bz2" 
+			src="galaxy-civilization.tar.bz2" forceoverwrite="true"/>
+		<copyfile dest="../galaxy-civilization.de/downloads/galaxy-civilization.zip" 
+			src="galaxy-civilization.zip" forceoverwrite="true"/>
+	</target>
+	
+	<target name="genarchiv-unix" depends="gensfx-unix">
+		<echo message="Erstelle Unix Distributionsarchiv"></echo>
+		<delete file="galaxy-civilization.tar.bz2"/>
+		<tar destfile="galaxy-civilization.tar.bz2" compression="bzip2">
+			<tarfileset dir="." casesensitive="false">
+				<include name="gc.sh"/>
+				<include name="agb.htm"/>
+				<include name="readme.txt"/>
+				<include name="logo_32.png"/>
+			</tarfileset>
+		</tar>
+	</target>
+	
+	
+	<target name="genarchiv-windows">
+		<echo message="Erstelle Windows Distributionsarchiv"></echo>
+		<zip destfile="galaxy-civilization.zip">
+			<fileset dir="." casesensitive="false">
+				<include name="gc.jar"/>
+				<include name="start.exe"/>
+				<include name="agb.htm"/>
+				<include name="readme.txt"/>
+				<include name="logo_32.png"/>
+			</fileset>
+		</zip>
+	</target>
+	
+	
+	<target name="gensfx-unix">
+		<taskdef classpath="${LIBEXT_DIR}/roxes-ant-tasks.jar" 
+			resource="com/roxes/tools/ant/taskdefs.properties"/>
+		<jstub
+		    archive="gc.jar"
+		    mode="unix"
+		    execute="java -cp gc.sh mou.Launcher"
+		    output="gc.sh"
+		/>
+	</target>
+
+	<target name="start">
+		<java classname="mou.Launcher" dir="." failonerror="true" fork="yes">
+			<classpath>
+				<pathelement location="."/>
+				<pathelement path="./../Common/classes"/>
+				<fileset dir="${basedir}/${LIB_DIR}">
+					<include name="**/*.jar"/>
+				</fileset>
+				<pathelement location="${basedir}/classes"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="start2">
+		<java jvm="${JVM}" classname="mou.Launcher"  failonerror="true" fork="yes"
+		  dir="./../MOU2/">
+			<classpath>
+				<pathelement location="./../MOU/"/>
+				<fileset dir="./../MOU/${LIB_DIR}">
+					<include name="**/*.jar"/>
+				</fileset>
+				<pathelement location="./../MOU/classes"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="start3">
+		<java jvm="${JVM}" classname="mou.Launcher"  failonerror="true" fork="yes"
+		  dir="../MOU3/">
+			<classpath>
+				<pathelement location="${basedir}"/>
+				<fileset dir="${LIB_DIR}">
+					<include name="**/*.jar"/>
+				</fileset>
+				<pathelement location="${basedir}/classes"/>
+			</classpath>
+		</java>
+	</target>
+
+
+</project>

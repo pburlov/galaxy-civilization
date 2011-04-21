@@ -1,0 +1,90 @@
+Version 15 (in work)
+- Bug mit Wertueberlauf bei Ressourcen behoben
+- Arbeitslosigkeit-Spalte in Kolonieuebersich hinzugekommen
+
+Version 14 (3.3.2006)
+- Modale Benachrichtigungsfenster wegen der Deadlocks ausgeschaltet
+- Checksumme-Ueberpruefung ausgeschaltet
+
+Version 13
+- Berechnung des BSP
+- Tooltip mit Aufzählung der Moral- und Wachstumsfaktoren
+- Effitienz des Koloniezentrums erhoht um 5 fache
+- Koloniezentrum kann jetzt allen Koloniesten Arbeitsplätze bieten, somit
+wird die Anfangsarbeitslosigkeit vermieden
+- Effitienz des Hyperantriebes um 100 fache verringert
+- Effitienz der Lebensversorgung um 100 fache verringert
+- Tageswachstumswerte der Kolonien werden jetzt gespeichert, und am Ende
+des Jahres zu einem mittleren Wert gerechnet. Mit dem mittleren Wert wird dann die 
+Bevölkerung berechnet.
+- Unzufriedenheit durch Schulden
+
+Version 12 (28.10.2005):
+- Bugfixes
+
+Version 11 (27.10.2005):
+- Forschungsmöglichkeiten für Koloniegebäude
+- Geldeinnahme aus Steuern
+- Einstellungen zum Arbeitstag
+- Aufstände
+
+Version 9:
+- Forschung auf effizientere Arbeitsweise umgestellt
+- Schiffsysteme haben ab jetzt festgespeicherte und nicht generierte Eigenschaften
+- Datenbankformat für Schiffe, Schifdesigns, Forschungsergebnisse und Schiffshandel 
+inkompartibel zu vorheriger Version geändert.
+
+Version 8 (5.5.2005):
+- (gefixt)Sternklickbereich darf nicht Schiffsklickbereich bedecken in der Kartenansicht
+- (gefixt)Bei gescrollten Schiffsliste in der Kartenansicht wird die Aktionsmenü für
+asugewählte Schiff an falscher Stelle gezeigt
+- Spalte 'Position' bei Schiffsansicht in der Sternenkarte entfernt
+- Option Nachrichten an alle schicken
+- Gesichtete feindliche Schiffe melden
+- bei gekauften Schiffen frage wo sie zu stationieren sind
+- "Nur an Alliierte verkaufen" Verkaufskontrolle
+- Alliierte ausspionieren
+- Selektionsverhalten in Schiffstabellen verbessert
+- Bei Rechstklick auf eigene Schiffe in der Sternenkarte wird sofort Flügpopup gezeigt
+
+Version 7 (29.4.2005):
+- Bugfixing
+
+Version 6:
+- Überlauf bei Rohstoffen korrigiert
+- Alle Zivilisationen online werden jetzt sofort in dem Diplomatiebildschirm sichtbar
+- JXTable anstatt JTable verwendet
+- JSplitPane in Diplomatiebildschirm eingebaut
+- Archivformat für Windows auf normalen zip umgestellt
+- Gefundene fremde Kolonien werden jetzt dauerhaft gespeichet
+- Navpoints in der Sternenkartenansicht
+
+Version 5:
+- Leafset Peers werden jeutz einem permanenten online Check unterzogen
+- Routing-Protocol: befor einen Peer-Vorschlag an den Requester schickt, wird dieser Peer
+auf online geprüft.
+- Join Protocol: eigene PeerHandle wird jetzt nicht nur an Peer aus der bekommenener RoutingTable
+geschickt, sondern auf an Hosts aus der Bootstrap Liste. So wird die Gefahr einer Netzfragmentation
+verringert.
+
+Version 4:
+-Doppelte Zeilen in de Console eliminiert
+- Benachrichtigung über neue Text-Messages
+- Eigene Adresse wird jeder Stunde zu IPPoroxy-Server geschickt
+- Vorheriger Spielstand wird in einer .back Datei gesichert.
+- Wenn primäre DB-Datei flasche Checksumme aufweist, dann wird versucht die
+Checksumme von .back Datei zu vergleichen
+- Jede Stunde wird der Spielstand gesichert 
+- Zur Bootstrapsuche wird NetSubsystem.IPPROXY_VERSION genommen und nicht Main.VERSION.
+Somit sind Versionen des Spiels von Kommunikationsversionen getrennt.
+- find.php löscht 2 Stunden alte Datensätze
+- Erkennung von nicht sichtbaren Peers, die trotzdem aktiv Spielen
+- Textnachrichten werden jetzt in Wrap-Mode gelesen und Verfasst
+- Wegen der Erkennung der defekten Peers, Kommunikationsprotokol auf
+Version 4 geändert
+- Startareal für neue Civ auf 1 Quadrant in jeder Richtung verengt
+
+Version 3:
+- NullPointerException in sendMessageToInterestedCivs(..) behoben. Line 275
+- Erreichbarkeitsprüfung beim Start vom Webserver durchführen
+- Versioncheck jede 3. Stunden
